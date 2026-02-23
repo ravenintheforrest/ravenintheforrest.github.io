@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Experience — Raven Howard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0e0e0f;
+      --surface: #161618;
+      --border:  #2a2a2e;
+      --amber:   #e8a94a;
+      --text:    #f0ede8;
+      --muted:   #888580;
+      --radius:  18px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100vh;
+      padding-bottom: 80px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border);
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .nav-back {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text); }
+    .nav-back svg { width: 14px; height: 14px; }
+    .nav-brand { font-size: 0.9rem; font-weight: 600; color: var(--amber); }
+
+    .page-header {
+      max-width: 860px;
+      margin: 48px auto 40px;
+      padding: 0 24px;
+    }
+    .page-header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+    }
+    .page-header p {
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+
+    /* ── Grid ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    /* ── Stats ── */
+    .card-stat { grid-column: span 4; text-align: center; padding: 24px 16px; }
+    .stat-num {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--amber);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label { font-size: 0.75rem; color: var(--muted); line-height: 1.4; }
+
+    /* ── Section label ── */
+    .section-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    /* ── Timeline ── */
+    .card-full { grid-column: span 12; }
+    .timeline { display: flex; flex-direction: column; }
+    .tl-item {
+      display: grid;
+      grid-template-columns: 120px 1px 1fr;
+      gap: 0 20px;
+      padding-bottom: 28px;
+    }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-date { font-size: 0.72rem; color: var(--muted); text-align: right; padding-top: 3px; line-height: 1.4; }
+    .tl-line { position: relative; background: var(--border); }
+    .tl-line::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--amber);
+    }
+    .tl-content { padding-top: 1px; }
+    .tl-company {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 3px;
+    }
+    .tl-role { font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; }
+    .tl-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── Expand button ── */
+    .tl-expand-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 12px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--muted);
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 4px 12px;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tl-expand-btn:hover { color: var(--amber); border-color: var(--amber); }
+    .tl-expand-btn .chevron { transition: transform 0.25s; display: inline-block; }
+    .tl-expand-btn.open .chevron { transform: rotate(180deg); }
+
+    .tl-detail { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, opacity 0.25s ease; opacity: 0; }
+    .tl-detail.open { max-height: 700px; opacity: 1; }
+    .tl-detail-inner { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border); }
+
+    .tl-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .tl-metric {
+      background: rgba(232,169,74,0.08);
+      border: 1px solid rgba(232,169,74,0.2);
+      border-radius: 10px;
+      padding: 8px 14px;
+      font-size: 0.75rem;
+    }
+    .tl-metric strong { color: var(--amber); display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 2px; }
+    .tl-metric span { color: var(--muted); }
+
+    .tl-bullets { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+    .tl-bullets li {
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.55;
+    }
+    .tl-bullets li::before { content: "›"; color: var(--amber); font-weight: 700; flex-shrink: 0; }
+
+    .tl-awards { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+    .tl-award {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--amber);
+      background: rgba(232,169,74,0.08);
+      border: 1px solid rgba(232,169,74,0.2);
+      border-radius: 99px;
+      padding: 3px 10px;
+    }
+
+    /* ── Education / Volunteer side-by-side ── */
+    .card-half-l { grid-column: span 5; }
+    .card-half-r { grid-column: span 7; }
+
+    .edu-item { padding-bottom: 20px; margin-bottom: 20px; border-bottom: 1px solid var(--border); }
+    .edu-item:last-child { padding-bottom: 0; margin-bottom: 0; border-bottom: none; }
+    .edu-org { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--amber); margin-bottom: 3px; }
+    .edu-title { font-size: 0.875rem; font-weight: 600; margin-bottom: 4px; }
+    .edu-sub { font-size: 0.78rem; color: var(--muted); }
+
+    @media (max-width: 640px) {
+      .card-stat   { grid-column: span 4; }
+      .card-full   { grid-column: span 12; }
+      .card-half-l { grid-column: span 12; }
+      .card-half-r { grid-column: span 12; }
+      .tl-item     { grid-template-columns: 76px 1px 1fr; gap: 0 12px; }
+      .tl-date     { font-size: 0.65rem; }
+      nav          { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-back" href="/">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      ravenhoward.org
+    </a>
+    <span class="nav-brand">Experience</span>
+  </nav>
+
+  <div class="page-header">
+    <h1>Experience</h1>
+    <p>Enterprise SaaS, procurement, and the companies I've helped build.</p>
+  </div>
+
+  <div class="grid">
+
+    <!-- Stats -->
+    <div class="card card-stat">
+      <div class="stat-num">$288M+</div>
+      <div class="stat-label">SaaS spend managed</div>
+    </div>
+    <div class="card card-stat">
+      <div class="stat-num">1,000+</div>
+      <div class="stat-label">deals closed</div>
+    </div>
+    <div class="card card-stat">
+      <div class="stat-num">5+ yrs</div>
+      <div class="stat-label">at <a href="https://vendr.com" target="_blank" rel="noopener" style="color:var(--amber);text-decoration:none;">Vendr</a></div>
+    </div>
+
+    <!-- Work Timeline -->
+    <div class="card card-full">
+      <p class="section-label">Work History</p>
+      <div class="timeline">
+
+        <!-- Vendr -->
+        <div class="tl-item">
+          <div class="tl-date">2020 – Present</div>
+          <div class="tl-line"></div>
+          <div class="tl-content">
+            <p class="tl-company"><a href="https://vendr.com" target="_blank" rel="noopener" style="color:var(--amber);text-decoration:none;">Vendr</a></p>
+            <p class="tl-role">Principal SaaS Consultant</p>
+            <p class="tl-desc">Part of the early team growing Vendr from seed-stage through a $1B valuation. Led enterprise SaaS negotiations for hundreds of companies — managing hundreds of millions in software spend across 5+ years and over 1,000 deals.</p>
+            <button class="tl-expand-btn" onclick="toggleDetail(this)">
+              Metrics & highlights <span class="chevron">↓</span>
+            </button>
+            <div class="tl-detail">
+              <div class="tl-detail-inner">
+                <div class="tl-metrics">
+                  <div class="tl-metric"><strong>$18.6M+</strong><span>savings for customers</span></div>
+                  <div class="tl-metric"><strong>$221M+</strong><span>managed spend (1st company-wide)</span></div>
+                  <div class="tl-metric"><strong>~$500K</strong><span>avg deal ACV</span></div>
+                  <div class="tl-metric"><strong>$150K</strong><span>net-new/month via pre-sale</span></div>
+                  <div class="tl-metric"><strong>3 logos</strong><span>closed/month via pre-sale</span></div>
+                </div>
+                <ul class="tl-bullets">
+                  <li>Strategic sourcing, RFPs & negotiation for Infra/Data Engineering — AWS, Datadog, New Relic, Splunk — with VP/Director/CTO-level stakeholders</li>
+                  <li>Founded the onboarding SaaS Consultant team; developed standardized procurement processes adopted company-wide</li>
+                  <li>Led team-wide best practices on supplier research, comp analysis, and discovery — improving customer collaboration and operational excellence</li>
+                  <li>Cross-functional collaboration across IT, InfoSec, Finance, Legal, Security, and Operations to drive approvals</li>
+                  <li>Escalation point for strategic accounts: Alloy, Calm, ClickUp, Peloton</li>
+                  <li>Contributed supplier analysis to Vendr's SaaS Buying Insights Report to support marketing funnel growth</li>
+                  <li>Pre-sale buying support for new business: $150K net-new and 3 logos/month</li>
+                  <li>5th SaaS Consultant hire — managed key accounts including AllTrails, Lovepop, Chorus</li>
+                  <li>Partnered with T&E team to develop SaaS Consultant training for the entire buying organization</li>
+                </ul>
+                <div class="tl-awards">
+                  <span class="tl-award">🏆 Most Deals Closed — All Time</span>
+                  <span class="tl-award">🏆 2022 Most Dollars Saved</span>
+                  <span class="tl-award">🏆 2021 One Team One Dream</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ceterus -->
+        <div class="tl-item">
+          <div class="tl-date">2019 – 2020</div>
+          <div class="tl-line"></div>
+          <div class="tl-content">
+            <p class="tl-company">Ceterus</p>
+            <p class="tl-role">Account Executive</p>
+            <p class="tl-desc">High-growth fintech startup on Inc. Magazine's fastest-growing companies list, raised a $10M Series B. Sold a done-for-you accounting platform to multi-location small businesses.</p>
+            <button class="tl-expand-btn" onclick="toggleDetail(this)">
+              Highlights <span class="chevron">↓</span>
+            </button>
+            <div class="tl-detail">
+              <div class="tl-detail-inner">
+                <ul class="tl-bullets">
+                  <li>Top SDR on team of 12 — 139% to quota all time; fastest promotion to AE</li>
+                  <li>Oversaw growth in fitness/wellness segment, responsible for brand strategy</li>
+                  <li>Part of management team for hiring and recruiting key talent</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ScanSource -->
+        <div class="tl-item">
+          <div class="tl-date">2016 – 2019</div>
+          <div class="tl-line"></div>
+          <div class="tl-content">
+            <p class="tl-company">ScanSource</p>
+            <p class="tl-role">Account Manager → Sales Operations Manager</p>
+            <p class="tl-desc">NASDAQ-listed global technology distributor. Grew from account management into sales operations for a $1B+ business unit.</p>
+            <button class="tl-expand-btn" onclick="toggleDetail(this)">
+              Highlights <span class="chevron">↓</span>
+            </button>
+            <div class="tl-detail">
+              <div class="tl-detail-inner">
+                <ul class="tl-bullets">
+                  <li>Developed sales processes and reporting frameworks for a $1B+ business unit</li>
+                  <li>Managed regional account portfolio, consistently driving growth quarter over quarter</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Education & Certs -->
+    <div class="card card-half-l">
+      <p class="section-label">Education & Certifications</p>
+      <div class="edu-item">
+        <p class="edu-org">Clemson University</p>
+        <p class="edu-title">BA, Psychology</p>
+        <p class="edu-sub">Religion Minor</p>
+      </div>
+      <div class="edu-item">
+        <p class="edu-org">FinOps Foundation</p>
+        <p class="edu-title">FinOps Certified Practitioner</p>
+        <p class="edu-sub">Issued Dec 2024 · Expires Dec 2026</p>
+      </div>
+    </div>
+
+    <!-- Volunteering -->
+    <div class="card card-half-r">
+      <p class="section-label">Volunteering</p>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-date">2023 – Present</div>
+          <div class="tl-line"></div>
+          <div class="tl-content">
+            <p class="tl-company">Grace City Church</p>
+            <p class="tl-role" style="font-size:0.875rem;">Non-Staff Pastor</p>
+            <p class="tl-desc">Serving in pastoral ministry at Grace City Church in Charleston, SC.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2019 – 2020</div>
+          <div class="tl-line"></div>
+          <div class="tl-content">
+            <p class="tl-company">SC Dept. of Social Services</p>
+            <p class="tl-role" style="font-size:0.875rem;">Foster Parent</p>
+            <p class="tl-desc">Licensed foster parent through the South Carolina Department of Social Services.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function toggleDetail(btn) {
+      const detail = btn.nextElementSibling;
+      const isOpen = detail.classList.contains('open');
+      detail.classList.toggle('open', !isOpen);
+      btn.classList.toggle('open', !isOpen);
+    }
+  </script>
+
+</body>
+</html>
