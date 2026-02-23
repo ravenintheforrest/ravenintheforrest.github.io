@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raven Howard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0e0e0f;
+      --surface:   #161618;
+      --border:    #2a2a2e;
+      --amber:     #e8a94a;
+      --amber-dim: #c4893a;
+      --text:      #f0ede8;
+      --muted:     #888580;
+      --radius:    18px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100vh;
+      padding: 24px 16px 60px;
+    }
+
+    /* ── Grid ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* ── Card base ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .card:hover { border-color: #444; transform: translateY(-2px); }
+    a.card { text-decoration: none; color: inherit; cursor: pointer; }
+
+    /* ── Hero card ── */
+    .card-hero {
+      grid-column: span 12;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      padding: 36px 32px;
+    }
+    .avatar {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: #222;
+    }
+    .hero-text h1 {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+    .hero-text h1 span { color: var(--amber); }
+    .hero-text p {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      max-width: 460px;
+    }
+
+    /* ── App cards ── */
+    .card-remain   { grid-column: span 7; }
+    .card-training { grid-column: span 5; }
+
+    .app-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      background: rgba(232, 169, 74, 0.12);
+      border: 1px solid rgba(232, 169, 74, 0.25);
+      padding: 3px 9px;
+      border-radius: 99px;
+      margin-bottom: 14px;
+    }
+    .card h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .card .desc {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 18px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--amber);
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .card-link:hover { opacity: 0.75; }
+    .card-link svg { width: 14px; height: 14px; }
+
+    .tagline {
+      margin-top: 14px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #555;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── Social cards ── */
+    .card-linkedin { grid-column: span 4; }
+    .card-threads  { grid-column: span 4; }
+    .card-blog     { grid-column: span 4; }
+
+    .social-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+    .social-icon svg { width: 20px; height: 20px; }
+    .icon-linkedin { background: rgba(10, 102, 194, 0.2); }
+    .icon-threads  { background: rgba(255, 255, 255, 0.08); }
+    .icon-blog     { background: rgba(232, 169, 74, 0.12); }
+
+    .card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .card .sub {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .badge-soon {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      padding: 3px 9px;
+      border-radius: 99px;
+    }
+
+    /* ── Pill row ── */
+    .pill-row {
+      grid-column: span 12;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding-top: 4px;
+    }
+    .pill {
+      font-size: 0.72rem;
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 5px 14px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .card-hero     { flex-direction: column; align-items: flex-start; gap: 18px; }
+      .card-remain   { grid-column: span 12; }
+      .card-training { grid-column: span 12; }
+      .card-linkedin { grid-column: span 12; }
+      .card-threads  { grid-column: span 12; }
+      .card-blog     { grid-column: span 12; }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid">
+
+    <!-- Hero -->
+    <div class="card card-hero">
+      <img src="assets/avatar.png" alt="Raven Howard" class="avatar" />
+      <div class="hero-text">
+        <h1>Raven <span>Howard</span></h1>
+        <p>Product builder making apps for the things that matter — faith, fitness, and the space in between.</p>
+      </div>
+    </div>
+
+    <!-- Remain -->
+    <a class="card card-remain" href="remain/">
+      <span class="app-tag">App</span>
+      <h2>Remain</h2>
+      <p class="desc">A contemplative space for your whole spiritual life — Scripture reading, meditation, breathwork, and journaling woven into one intentional practice.</p>
+      <p class="tagline">Head · Hands · Heart</p>
+      <span class="card-link">
+        Learn more
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </span>
+    </a>
+
+    <!-- Training Stack -->
+    <a class="card card-training" href="training-stack/">
+      <span class="app-tag">App</span>
+      <h2>Training Stack</h2>
+      <p class="desc">Run & strength tracking in one beautiful app. Plans, analytics, Apple Watch, share cards, and more.</p>
+      <span class="card-link">
+        Learn more
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </span>
+    </a>
+
+    <!-- LinkedIn -->
+    <a class="card card-linkedin" href="https://linkedin.com/in/ravenhoward" target="_blank" rel="noopener">
+      <div class="social-icon icon-linkedin">
+        <svg viewBox="0 0 24 24" fill="#0a66c2"><path d="M20.447 20.452H17.21v-5.569c0-1.327-.024-3.036-1.852-3.036-1.854 0-2.137 1.446-2.137 2.94v5.665H9.985V9h3.103v1.561h.044c.432-.818 1.487-1.681 3.062-1.681 3.274 0 3.878 2.155 3.878 4.957v6.615zM5.337 7.433a1.8 1.8 0 1 1 0-3.601 1.8 1.8 0 0 1 0 3.601zm1.552 13.019H3.783V9h3.106v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </div>
+      <h3>LinkedIn</h3>
+      <p class="sub">linkedin.com/in/ravenhoward</p>
+    </a>
+
+    <!-- Threads -->
+    <a class="card card-threads" href="https://www.threads.com/@ravenintheforrest" target="_blank" rel="noopener">
+      <div class="social-icon icon-threads">
+        <svg viewBox="0 0 192 192" fill="var(--text)"><path d="M141.537 88.988a66.667 66.667 0 0 0-2.518-1.143c-1.482-27.307-16.403-42.94-41.457-43.1h-.34c-14.986 0-27.449 6.396-35.12 18.036l13.779 9.452c5.73-8.695 14.724-10.548 21.348-10.548h.229c8.249.053 14.474 2.452 18.503 7.129 2.932 3.405 4.893 8.111 5.864 14.05-7.314-1.243-15.224-1.626-23.68-1.14-23.82 1.371-39.134 15.264-38.105 34.568.522 9.792 5.4 18.216 13.735 23.719 7.047 4.652 16.124 6.927 25.557 6.412 12.458-.683 22.231-5.436 29.049-14.127 5.178-6.6 8.453-15.153 9.899-25.93 5.937 3.583 10.337 8.298 12.767 13.966 4.132 9.635 4.373 25.468-8.546 38.376-11.319 11.308-24.925 16.2-45.488 16.352-22.809-.169-40.06-7.484-51.275-21.742C35.236 139.966 29.808 120.682 29.605 96c.203-24.682 5.63-43.966 16.133-57.317C56.954 24.425 74.204 17.11 97.013 16.94c22.975.17 40.526 7.52 52.171 21.847 5.71 7.026 10.015 15.86 12.853 26.162l16.147-4.308c-3.44-12.68-8.853-23.606-16.219-32.668C147.036 9.607 125.202.195 97.07 0h-.113C68.882.195 47.292 9.642 32.788 28.08 19.882 44.485 13.224 67.315 13.001 96v.5c.223 28.685 6.881 51.515 19.787 67.92 14.504 18.438 36.094 27.885 64.196 28.08h.113c24.96-.173 42.554-6.708 57.048-21.166 19.318-19.292 18.718-43.386 12.388-58.185-4.27-9.955-12.66-18.051-24.996-23.161zM96.647 144.615c-10.453.576-21.348-4.097-27.198-11.868-4.151-5.542-5.555-12.219-3.956-18.978 2.794-11.677 13.486-18.675 30.365-19.635 2.655-.153 5.27-.228 7.842-.228 5.84 0 11.318.49 16.347 1.453-1.86 23.186-11.917 47.926-23.4 48.256z"/></svg>
+      </div>
+      <h3>Threads</h3>
+      <p class="sub">@ravenintheforrest</p>
+    </a>
+
+    <!-- Blog -->
+    <div class="card card-blog">
+      <div class="social-icon icon-blog">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="1.75"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      </div>
+      <h3>Writing</h3>
+      <p class="sub">Thoughts on building, faith & fitness</p>
+      <span class="badge-soon">Coming soon</span>
+    </div>
+
+    <!-- Pill row -->
+    <div class="pill-row">
+      <span class="pill">iOS Developer</span>
+      <span class="pill">SwiftUI</span>
+      <span class="pill">Product</span>
+      <span class="pill">Apple Watch</span>
+      <span class="pill">HealthKit</span>
+    </div>
+
+  </div>
+</body>
+</html>

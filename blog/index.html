@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Writing — Raven Howard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0e0e0f;
+      --surface: #161618;
+      --border:  #2a2a2e;
+      --amber:   #e8a94a;
+      --text:    #f0ede8;
+      --muted:   #888580;
+      --radius:  18px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100vh;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .nav-home {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.15s;
+    }
+    .nav-home:hover { color: var(--text); }
+    .nav-home svg { width: 14px; height: 14px; }
+    .nav-brand { font-size: 0.9rem; font-weight: 600; color: var(--amber); }
+
+    .coming-soon {
+      max-width: 520px;
+      margin: 120px auto 0;
+      padding: 0 24px;
+      text-align: center;
+    }
+
+    .icon-wrap {
+      width: 64px;
+      height: 64px;
+      background: rgba(232, 169, 74, 0.1);
+      border: 1px solid rgba(232, 169, 74, 0.2);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+      font-size: 1.6rem;
+    }
+
+    .coming-soon h1 {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 2.4rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+
+    .coming-soon p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    .topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 48px;
+    }
+    .topic {
+      font-size: 0.78rem;
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 6px 14px;
+    }
+
+    .notify {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    .notify a {
+      color: var(--amber);
+      text-decoration: none;
+    }
+    .notify a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-home" href="/">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      ravenhoward.org
+    </a>
+    <span class="nav-brand">Writing</span>
+  </nav>
+
+  <div class="coming-soon">
+    <div class="icon-wrap">✍️</div>
+    <h1>Writing</h1>
+    <p>Thoughts on building iOS apps, faith, fitness, and the creative process. Coming soon.</p>
+
+    <div class="topics">
+      <span class="topic">Building in public</span>
+      <span class="topic">SwiftUI</span>
+      <span class="topic">Spiritual practice</span>
+      <span class="topic">Training & running</span>
+      <span class="topic">Product decisions</span>
+      <span class="topic">Apple ecosystem</span>
+    </div>
+
+    <p class="notify">
+      Follow along on <a href="https://www.threads.com/@ravenintheforrest" target="_blank" rel="noopener">Threads</a> in the meantime.
+    </p>
+  </div>
+
+</body>
+</html>

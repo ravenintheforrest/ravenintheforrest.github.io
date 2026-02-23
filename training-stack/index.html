@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Training Stack — Run & Strength Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0e0e0f;
+      --surface: #161618;
+      --border:  #2a2a2e;
+      --amber:   #e8a94a;
+      --blue:    #4a9de8;
+      --text:    #f0ede8;
+      --muted:   #888580;
+      --radius:  18px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100vh;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .nav-home {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.15s;
+    }
+    .nav-home:hover { color: var(--text); }
+    .nav-home svg { width: 14px; height: 14px; }
+    .nav-brand { font-size: 0.9rem; font-weight: 600; color: var(--amber); }
+
+    .hero {
+      max-width: 680px;
+      margin: 80px auto 60px;
+      padding: 0 24px;
+      text-align: center;
+    }
+    .app-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      background: rgba(232, 169, 74, 0.12);
+      border: 1px solid rgba(232, 169, 74, 0.25);
+      padding: 4px 12px;
+      border-radius: 99px;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 7vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+    }
+    .hero h1 span { color: var(--amber); }
+    .hero p {
+      margin-top: 20px;
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── Two-col features ── */
+    .two-col {
+      max-width: 760px;
+      margin: 0 auto 60px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .col-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+    }
+    .col-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 16px;
+    }
+    .col-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .col-card li {
+      font-size: 0.85rem;
+      color: var(--muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.4;
+    }
+    .col-card li::before {
+      content: "›";
+      color: var(--amber);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ── Feature pills row ── */
+    .extras {
+      max-width: 760px;
+      margin: 0 auto 80px;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .extra-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 16px;
+      text-align: center;
+    }
+    .extra-card .icon { font-size: 1.3rem; margin-bottom: 8px; }
+    .extra-card h4 { font-size: 0.8rem; font-weight: 600; margin-bottom: 4px; }
+    .extra-card p { font-size: 0.72rem; color: var(--muted); line-height: 1.4; }
+
+    @media (max-width: 600px) {
+      .two-col  { grid-template-columns: 1fr; }
+      .extras   { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-home" href="/">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      ravenhoward.org
+    </a>
+    <span class="nav-brand">Training Stack</span>
+  </nav>
+
+  <section class="hero">
+    <span class="app-tag">iOS · watchOS</span>
+    <h1>Training<br/><span>Stack</span></h1>
+    <p>Run and strength tracking in one powerful app. Plans, analytics, share cards, Apple Watch — everything you need to build your perfect training routine.</p>
+  </section>
+
+  <div class="two-col">
+
+    <div class="col-card">
+      <p class="col-label">🏃 Running</p>
+      <ul>
+        <li>Auto-syncs all runs from Apple Health</li>
+        <li>Pace, distance, heart rate, elevation, splits</li>
+        <li>Streaks, PRs, and performance trends</li>
+        <li>Heart rate zone analysis</li>
+        <li>Custom multi-week training plans</li>
+        <li>Weekly, monthly, and yearly stats</li>
+      </ul>
+    </div>
+
+    <div class="col-card">
+      <p class="col-label">🏋️ Strength</p>
+      <ul>
+        <li>400+ exercise library by muscle group</li>
+        <li>Track sets, reps, weight, and RPE</li>
+        <li>Superset and circuit support</li>
+        <li>Personal records tracked automatically</li>
+        <li>Multi-week periodized programs</li>
+        <li>Progressive overload built in</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="extras">
+
+    <div class="extra-card">
+      <div class="icon">📸</div>
+      <h4>Share Cards</h4>
+      <p>Beautiful cards for Instagram, Threads & more. Light & dark themes.</p>
+    </div>
+
+    <div class="extra-card">
+      <div class="icon">⌚</div>
+      <h4>Apple Watch</h4>
+      <p>Track strength workouts and running stats on your wrist.</p>
+    </div>
+
+    <div class="extra-card">
+      <div class="icon">🏝️</div>
+      <h4>Live Activities</h4>
+      <p>Lock screen workout tracking with Dynamic Island support.</p>
+    </div>
+
+    <div class="extra-card">
+      <div class="icon">🌤️</div>
+      <h4>Weather</h4>
+      <p>7-day running conditions forecast with a daily weather score.</p>
+    </div>
+
+  </div>
+
+</body>
+</html>
