@@ -235,58 +235,43 @@
     /* ── Side projects ── */
     .card-full { grid-column: span 12; }
     .projects-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    .project-card {
-      background: rgba(232,169,74,0.04);
-      border: 1px solid rgba(232,169,74,0.15);
-      border-radius: 14px;
-      padding: 20px;
-    }
-    .project-header {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 8px;
+      flex-direction: column;
+      gap: 0;
     }
-    .project-name {
-      font-size: 0.95rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
+    .project-item {
+      display: grid;
+      grid-template-columns: 120px 1px 1fr;
+      gap: 0 20px;
+      padding-bottom: 24px;
     }
-    .project-badge {
-      font-size: 0.62rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 2px 8px;
-      border-radius: 99px;
-    }
-    .badge-live {
-      color: #5ccb7a;
-      background: rgba(92,203,122,0.1);
-      border: 1px solid rgba(92,203,122,0.25);
-    }
-    .badge-soon {
+    .project-item:last-child { padding-bottom: 0; }
+    .project-status {
+      font-size: 0.72rem;
       color: var(--muted);
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
+      text-align: right;
+      padding-top: 3px;
+      line-height: 1.4;
+    }
+    .project-status.live { color: #7ac99a; }
+    .project-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 3px;
     }
     .project-platform {
-      font-size: 0.68rem;
+      font-size: 0.72rem;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--amber);
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
     .project-desc {
       font-size: 0.8rem;
       color: var(--muted);
-      line-height: 1.55;
-      margin-bottom: 12px;
+      line-height: 1.6;
+      margin-bottom: 8px;
     }
     .project-tags {
       display: flex;
@@ -294,31 +279,26 @@
       gap: 5px;
     }
     .project-tag {
-      font-size: 0.68rem;
-      color: var(--muted);
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 3px 8px;
-    }
-    .project-links {
-      display: flex;
-      gap: 10px;
-      margin-top: 12px;
-      flex-wrap: wrap;
+      font-size: 0.67rem;
+      color: #555;
+      border: 1px solid #333;
+      border-radius: 5px;
+      padding: 2px 7px;
     }
     .project-link {
       font-size: 0.72rem;
       font-weight: 500;
       color: var(--amber);
       text-decoration: none;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 4px;
+      margin-top: 8px;
+      opacity: 0.8;
       transition: opacity 0.15s;
     }
-    .project-link:hover { opacity: 0.7; }
-    .project-link svg { width: 11px; height: 11px; }
+    .project-link:hover { opacity: 1; }
+    .project-link svg { width: 10px; height: 10px; }
 
     /* ── Education / Volunteer side-by-side ── */
     .card-half-l { grid-column: span 5; }
@@ -338,7 +318,7 @@
       .tl-item      { grid-template-columns: 76px 1px 1fr; gap: 0 12px; }
       .tl-date      { font-size: 0.65rem; }
       nav           { padding: 16px; }
-      .projects-grid { grid-template-columns: 1fr; }
+      .project-item { grid-template-columns: 76px 1px 1fr; gap: 0 12px; }
       .resume-identity { gap: 14px; }
       .resume-avatar { width: 56px; height: 56px; }
     }
@@ -483,53 +463,42 @@
 
     <!-- Side Projects / Building -->
     <div class="card card-full">
-      <p class="section-label">Building</p>
+      <p class="section-label">Solo Development</p>
       <div class="projects-grid">
 
-        <div class="project-card">
-          <div class="project-header">
-            <span class="project-name">Training Stack</span>
-            <span class="project-badge badge-live">Live on App Store</span>
-          </div>
-          <p class="project-platform">iOS · watchOS</p>
-          <p class="project-desc">Run and strength tracking in one app. Plans, analytics, heart rate zones, share cards, Apple Watch, and Live Activities. Solo built from scratch.</p>
-          <div class="project-tags">
-            <span class="project-tag">SwiftUI</span>
-            <span class="project-tag">HealthKit</span>
-            <span class="project-tag">WeatherKit</span>
-            <span class="project-tag">MapKit</span>
-            <span class="project-tag">WatchKit</span>
-          </div>
-          <div class="project-links">
+        <div class="project-item">
+          <div class="project-status live">Live</div>
+          <div class="tl-line"></div>
+          <div class="tl-content">
+            <p class="project-platform">Training Stack</p>
+            <p class="tl-role" style="font-size:0.8rem;font-weight:400;color:var(--muted);margin-bottom:5px;">iOS · watchOS · App Store</p>
+            <p class="project-desc">Run and strength tracking in one app. Plans, analytics, heart rate zones, share cards, Apple Watch, and Live Activities. Solo built from scratch.</p>
+            <div class="project-tags">
+              <span class="project-tag">SwiftUI</span>
+              <span class="project-tag">HealthKit</span>
+              <span class="project-tag">WeatherKit</span>
+              <span class="project-tag">MapKit</span>
+              <span class="project-tag">WatchKit</span>
+            </div>
             <a class="project-link" href="https://apps.apple.com/us/app/training-stack/id6757607761" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-              App Store
-            </a>
-            <a class="project-link" href="/training-stack/" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              Page
+              App Store →
             </a>
           </div>
         </div>
 
-        <div class="project-card">
-          <div class="project-header">
-            <span class="project-name">Remain</span>
-            <span class="project-badge badge-soon">Coming Soon</span>
-          </div>
-          <p class="project-platform">iOS · macOS · watchOS</p>
-          <p class="project-desc">A contemplative app for intentional spiritual practice — Scripture reading, meditation, breathwork, journaling, and prayer woven into one space for the whole person.</p>
-          <div class="project-tags">
-            <span class="project-tag">SwiftUI</span>
-            <span class="project-tag">HealthKit</span>
-            <span class="project-tag">CloudKit</span>
-            <span class="project-tag">Multi-platform</span>
-          </div>
-          <div class="project-links">
-            <a class="project-link" href="/remain/" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              Preview page
-            </a>
+        <div class="project-item">
+          <div class="project-status">In progress</div>
+          <div class="tl-line"></div>
+          <div class="tl-content">
+            <p class="project-platform">Remain</p>
+            <p class="tl-role" style="font-size:0.8rem;font-weight:400;color:var(--muted);margin-bottom:5px;">iOS · macOS · watchOS</p>
+            <p class="project-desc">A contemplative app for intentional spiritual practice — Scripture reading, meditation, breathwork, journaling, and prayer woven into one space for the whole person.</p>
+            <div class="project-tags">
+              <span class="project-tag">SwiftUI</span>
+              <span class="project-tag">HealthKit</span>
+              <span class="project-tag">CloudKit</span>
+              <span class="project-tag">Multi-platform</span>
+            </div>
           </div>
         </div>
 
