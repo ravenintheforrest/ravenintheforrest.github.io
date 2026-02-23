@@ -177,6 +177,85 @@
       border-radius: 99px;
     }
 
+    /* ── Work section ── */
+    .card-work { grid-column: span 12; }
+
+    .section-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    /* stat cards */
+    .card-stat { grid-column: span 4; text-align: center; padding: 24px 16px; }
+    .stat-num {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--amber);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* timeline */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .tl-item {
+      display: grid;
+      grid-template-columns: 120px 1px 1fr;
+      gap: 0 20px;
+      padding-bottom: 24px;
+    }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-date {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-align: right;
+      padding-top: 3px;
+      line-height: 1.4;
+    }
+    .tl-line {
+      position: relative;
+      background: var(--border);
+    }
+    .tl-line::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--amber);
+    }
+    .tl-content { padding-top: 1px; }
+    .tl-company {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 3px;
+    }
+    .tl-role {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    .tl-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
     /* ── Pill row ── */
     .pill-row {
       grid-column: span 12;
@@ -204,6 +283,9 @@
       .card-linkedin { grid-column: span 12; }
       .card-threads  { grid-column: span 12; }
       .card-blog     { grid-column: span 12; }
+      .card-stat     { grid-column: span 4; }
+      .tl-item       { grid-template-columns: 80px 1px 1fr; gap: 0 12px; }
+      .tl-date       { font-size: 0.65rem; }
     }
   </style>
 </head>
@@ -268,6 +350,58 @@
       <h3>Writing</h3>
       <p class="sub">Thoughts on building, faith & fitness</p>
       <span class="badge-soon">Coming soon</span>
+    </div>
+
+    <!-- Stats -->
+    <div class="card card-stat">
+      <div class="stat-num">$288M+</div>
+      <div class="stat-label">SaaS spend managed</div>
+    </div>
+    <div class="card card-stat">
+      <div class="stat-num">976+</div>
+      <div class="stat-label">deals closed</div>
+    </div>
+    <div class="card card-stat">
+      <div class="stat-num">5+ yrs</div>
+      <div class="stat-label">at a $1B company</div>
+    </div>
+
+    <!-- Work -->
+    <div class="card card-work">
+      <p class="section-label">Work</p>
+      <div class="timeline">
+
+        <div class="tl-item">
+          <div class="tl-date">2020 – Present</div>
+          <div class="tl-line"></div>
+          <div class="tl-content">
+            <p class="tl-company">Vendr</p>
+            <p class="tl-role">Principal SaaS Consultant</p>
+            <p class="tl-desc">Part of the team that grew Vendr from seed-stage to a $1B valuation. Led enterprise SaaS negotiations for hundreds of companies — managing hundreds of millions in software spend across 5 years and nearly 1,000 deals.</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-date">2019 – 2020</div>
+          <div class="tl-line"></div>
+          <div class="tl-content">
+            <p class="tl-company">Ceterus</p>
+            <p class="tl-role">Account Executive</p>
+            <p class="tl-desc">Joined a Y Combinator-backed fintech startup that made Inc. Magazine's fastest-growing companies list and raised a $10M Series B. Sold a done-for-you accounting platform to multi-location small businesses.</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-date">2016 – 2019</div>
+          <div class="tl-line"></div>
+          <div class="tl-content">
+            <p class="tl-company">ScanSource</p>
+            <p class="tl-role">Account Manager → Sales Operations</p>
+            <p class="tl-desc">Began my career at a NASDAQ-listed global technology distributor, growing from account management into sales operations.</p>
+          </div>
+        </div>
+
+      </div>
     </div>
 
     <!-- Pill row -->
