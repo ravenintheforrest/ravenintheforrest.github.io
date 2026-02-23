@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 1200px;
+      height: 630px;
+      overflow: hidden;
+      background: #0e0e0f;
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+    }
+    .bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 55% 50% at 15% 20%, rgba(139,92,246,0.22) 0%, transparent 100%),
+        radial-gradient(ellipse 55% 50% at 85% 80%, rgba(232,169,74,0.28) 0%, transparent 100%),
+        radial-gradient(ellipse 35% 40% at 80% 15%, rgba(59,130,246,0.1) 0%, transparent 100%),
+        #0e0e0f;
+    }
+    .border-frame {
+      position: absolute;
+      inset: 24px;
+      border: 1px solid #2a2a2e;
+      border-radius: 24px;
+    }
+    .content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      padding: 0 96px;
+      gap: 80px;
+    }
+    .left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .name {
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+    .name .first {
+      font-size: 108px;
+      font-weight: 700;
+      color: #f0ede8;
+      letter-spacing: -4px;
+      display: block;
+    }
+    .name .last {
+      font-size: 108px;
+      font-weight: 700;
+      color: #e8a94a;
+      letter-spacing: -4px;
+      display: block;
+    }
+    .divider {
+      width: 52px;
+      height: 3px;
+      background: #e8a94a;
+      border-radius: 2px;
+      margin-bottom: 20px;
+      opacity: 0.7;
+    }
+    .bio {
+      font-size: 26px;
+      color: #888580;
+      line-height: 1.55;
+      margin-bottom: 24px;
+      letter-spacing: -0.2px;
+    }
+    .pills {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .pill {
+      font-size: 15px;
+      color: #555;
+      border: 1px solid #333;
+      border-radius: 99px;
+      padding: 5px 16px;
+    }
+    .domain {
+      position: absolute;
+      bottom: 48px;
+      left: 96px;
+      font-size: 19px;
+      color: #444;
+      letter-spacing: 0.03em;
+    }
+    /* Avatar */
+    .avatar-side {
+      flex-shrink: 0;
+      position: relative;
+      width: 280px;
+      height: 280px;
+    }
+    .avatar-ring {
+      position: absolute;
+      inset: -5px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, #e8a94a, #f5c97a, #c4893a, #f0d080, #e8a94a);
+    }
+    .avatar-bg {
+      position: absolute;
+      inset: 3px;
+      border-radius: 50%;
+      background: #161618;
+    }
+    .avatar-img {
+      position: absolute;
+      inset: 8px;
+      border-radius: 50%;
+      object-fit: cover;
+      width: calc(100% - 16px);
+      height: calc(100% - 16px);
+    }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="border-frame"></div>
+  <div class="content">
+    <div class="left">
+      <div class="name">
+        <span class="first">Raven</span>
+        <span class="last">Howard</span>
+      </div>
+      <div class="divider"></div>
+      <p class="bio">Curious about people,<br>opinionated about ideas.<br>Enterprise SaaS · iOS apps · Charleston, SC.</p>
+      <div class="pills">
+        <span class="pill">Faith</span>
+        <span class="pill">Family</span>
+        <span class="pill">Fitness</span>
+        <span class="pill">Building</span>
+        <span class="pill">Community</span>
+      </div>
+    </div>
+    <div class="avatar-side">
+      <div class="avatar-ring"></div>
+      <div class="avatar-bg"></div>
+      <img class="avatar-img" src="avatar.png" alt="Raven Howard"/>
+    </div>
+  </div>
+  <div class="domain">ravenhoward.org</div>
+</body>
+</html>
