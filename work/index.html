@@ -300,6 +300,33 @@
     .project-link:hover { opacity: 1; }
     .project-link svg { width: 10px; height: 10px; }
 
+    /* ── Working Style ── */
+    .wiring-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .wiring-item {
+      background: var(--surface);
+      padding: 16px 18px;
+    }
+    .wiring-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+    .wiring-desc {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
     /* ── Education / Volunteer side-by-side ── */
     .card-half-l { grid-column: span 5; }
     .card-half-r { grid-column: span 7; }
@@ -318,7 +345,8 @@
       .tl-item      { grid-template-columns: 76px 1px 1fr; gap: 0 12px; }
       .tl-date      { font-size: 0.65rem; }
       nav           { padding: 16px; }
-      .project-item { grid-template-columns: 76px 1px 1fr; gap: 0 12px; }
+      .project-item  { grid-template-columns: 76px 1px 1fr; gap: 0 12px; }
+      .wiring-grid   { grid-template-columns: repeat(2, 1fr); }
       .resume-identity { gap: 14px; }
       .resume-avatar { width: 56px; height: 56px; }
     }
@@ -502,6 +530,37 @@
           </div>
         </div>
 
+      </div>
+    </div>
+
+    <!-- Working Style -->
+    <div class="card card-full">
+      <p class="section-label">Working Style</p>
+      <div class="wiring-grid">
+        <div class="wiring-item">
+          <p class="wiring-label">Persuasive & direct</p>
+          <p class="wiring-desc">Gets to the point. Brings people along with a perspective rather than just presenting options.</p>
+        </div>
+        <div class="wiring-item">
+          <p class="wiring-label">Curious before certain</p>
+          <p class="wiring-desc">Opinionated, but genuinely wants to know what you think. Comfortable sitting with complexity.</p>
+        </div>
+        <div class="wiring-item">
+          <p class="wiring-label">Reflective, then decisive</p>
+          <p class="wiring-desc">Prefers to think before acting. Finds the optimal process first, then moves with conviction.</p>
+        </div>
+        <div class="wiring-item">
+          <p class="wiring-label">Deep over broad</p>
+          <p class="wiring-desc">One long, useful conversation over ten surface ones. Invests in the people and problems worth investing in.</p>
+        </div>
+        <div class="wiring-item">
+          <p class="wiring-label">Builds for the long game</p>
+          <p class="wiring-desc">Drawn to systems, processes, and tools that actually work — not just what ships fastest.</p>
+        </div>
+        <div class="wiring-item">
+          <p class="wiring-label">Needs clear metrics</p>
+          <p class="wiring-desc">Works best with a scorecard. Wants to know how things are going and where the bar is.</p>
+        </div>
       </div>
     </div>
 
