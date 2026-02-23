@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Training Stack</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0e0e0f;
+      --surface: #161618;
+      --border:  #2a2a2e;
+      --amber:   #e8a94a;
+      --text:    #f0ede8;
+      --muted:   #888580;
+      --radius:  18px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100vh;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .nav-back {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text); }
+    .nav-back svg { width: 14px; height: 14px; }
+    .nav-brand { font-size: 0.9rem; font-weight: 600; color: var(--amber); }
+
+    .content {
+      max-width: 660px;
+      margin: 60px auto 100px;
+      padding: 0 24px;
+    }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .meta-tag {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      background: rgba(232, 169, 74, 0.12);
+      border: 1px solid rgba(232, 169, 74, 0.25);
+      padding: 3px 10px;
+      border-radius: 99px;
+    }
+    .meta-date {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 48px;
+    }
+
+    /* ── Summary card ── */
+    .summary-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--amber);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 48px;
+    }
+    .summary-card h3 {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 14px;
+    }
+    .summary-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .summary-card li {
+      font-size: 0.875rem;
+      color: var(--text);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .summary-card li::before {
+      content: "✓";
+      color: var(--amber);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ── Sections ── */
+    .section {
+      margin-bottom: 40px;
+    }
+    .section h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section h3 {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--amber);
+      margin: 16px 0 8px;
+    }
+    .section p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+    .section ul {
+      list-style: none;
+      margin: 8px 0 14px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .section li {
+      font-size: 0.85rem;
+      color: var(--muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.5;
+    }
+    .section li::before {
+      content: "›";
+      color: var(--amber);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .section a {
+      color: var(--amber);
+      text-decoration: none;
+    }
+    .section a:hover { text-decoration: underline; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    .last-updated {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-back" href="/training-stack/">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Training Stack
+    </a>
+    <span class="nav-brand">Privacy Policy</span>
+  </nav>
+
+  <div class="content">
+
+    <div class="meta">
+      <span class="meta-tag">Legal</span>
+      <span class="meta-date">Last updated January 15, 2026</span>
+    </div>
+
+    <h1>Privacy Policy</h1>
+    <p class="subtitle">Training Stack — Run & Strength Tracker</p>
+
+    <div class="summary-card">
+      <h3>TL;DR — The short version</h3>
+      <ul>
+        <li>All data stays on your device</li>
+        <li>No servers, no accounts, no tracking</li>
+        <li>You control your data completely</li>
+        <li>We never see or access your personal information</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Overview</h2>
+      <p>Training Stack ("the App") is a fitness tracking application that helps you track running workouts and strength training. Your privacy is important to us. This policy explains what data the App accesses and how it is used.</p>
+    </div>
+
+    <div class="section">
+      <h2>Data We Access</h2>
+
+      <h3>Health & Fitness Data (via Apple HealthKit)</h3>
+      <p>The App reads the following data from Apple Health:</p>
+      <ul>
+        <li>Running and walking workouts (distance, duration, pace, route)</li>
+        <li>Heart rate data</li>
+        <li>Step count</li>
+        <li>VO2 Max</li>
+        <li>Resting heart rate</li>
+        <li>Heart rate variability</li>
+        <li>Sleep data</li>
+        <li>Active energy burned</li>
+        <li>Elevation data</li>
+      </ul>
+      <p>The App writes the following data to Apple Health:</p>
+      <ul>
+        <li>Strength training workouts</li>
+      </ul>
+      <p>Purpose: This data is used to display your fitness statistics, track progress, analyze training patterns, and help you plan future workouts.</p>
+
+      <h3>Location Data</h3>
+      <p>The App may request location access to provide local weather forecasts and running conditions, and to display weather information on share cards.</p>
+      <p>Purpose: Location is used solely to fetch weather data for your area. Your location is not tracked, stored, or transmitted to any server.</p>
+
+      <h3>Photos</h3>
+      <p>The App requests permission to save images to your photo library when you create and export share cards, allowing you to save workout summary images to share on social media or with friends.</p>
+    </div>
+
+    <div class="section">
+      <h2>Data Storage</h2>
+      <p>All your fitness data is stored locally on your device. Training Stack does not have servers and does not transmit your personal data to any external service.</p>
+      <ul>
+        <li>Workout history is stored on your device</li>
+        <li>Training plans are stored on your device</li>
+        <li>Exercise statistics are stored on your device</li>
+        <li>No account creation is required</li>
+        <li>No cloud sync or backup to external servers</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Data Sharing</h2>
+      <p>We do not share your data with anyone.</p>
+      <ul>
+        <li>No data is sold to third parties</li>
+        <li>No data is shared with advertisers</li>
+        <li>No data is transmitted to external servers</li>
+        <li>No analytics or tracking services are used</li>
+      </ul>
+      <p>The only way your data leaves the App is when you explicitly choose to share a workout card image via the iOS share sheet.</p>
+    </div>
+
+    <div class="section">
+      <h2>Third-Party Services</h2>
+      <p>Training Stack uses the following Apple services:</p>
+      <ul>
+        <li>Apple HealthKit — to read and write fitness data</li>
+        <li>Apple WeatherKit — to fetch weather forecasts</li>
+        <li>Apple MapKit — to display route maps (data processed locally)</li>
+      </ul>
+      <p>These services are provided by Apple and are subject to <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's privacy policy</a>.</p>
+    </div>
+
+    <div class="section">
+      <h2>Children's Privacy</h2>
+      <p>Training Stack does not knowingly collect data from children under 13. The App does not require any personal information to function.</p>
+    </div>
+
+    <div class="section">
+      <h2>Data Retention</h2>
+      <p>Since all data is stored locally on your device:</p>
+      <ul>
+        <li>Data persists until you delete the App</li>
+        <li>You can delete the App at any time to remove all stored data</li>
+        <li>HealthKit data remains in Apple Health unless you delete it there</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Your Rights</h2>
+      <p>You have full control over your data:</p>
+      <ul>
+        <li>Access — view all your data within the App</li>
+        <li>Delete — remove the App to delete all locally stored data</li>
+        <li>HealthKit — manage permissions in Settings › Health › Data Access</li>
+        <li>Export — export your health profile data as JSON from within the App</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Changes to This Policy</h2>
+      <p>We may update this privacy policy from time to time. Any changes will be reflected in the "Last Updated" date above. Continued use of the App after changes constitutes acceptance of the updated policy.</p>
+    </div>
+
+    <div class="section">
+      <h2>Contact Us</h2>
+      <p>If you have questions about this privacy policy or the App's data practices, please contact:</p>
+      <ul>
+        <li>Email: <a href="mailto:ravenhoward@gmail.com">ravenhoward@gmail.com</a></li>
+      </ul>
+    </div>
+
+    <p class="last-updated">Effective as of January 15, 2026</p>
+
+  </div>
+
+</body>
+</html>
