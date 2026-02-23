@@ -26,7 +26,10 @@
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--bg);
+      background:
+        radial-gradient(ellipse 70% 45% at 8% 0%,   rgba(139,92,246,0.055) 0%, transparent 100%),
+        radial-gradient(ellipse 60% 40% at 92% 100%, rgba(232,169,74,0.07)  0%, transparent 100%),
+        var(--bg);
       color: var(--text);
       font-family: 'Inter', system-ui, sans-serif;
       min-height: 100vh;
@@ -48,10 +51,25 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 28px;
-      transition: border-color 0.2s, transform 0.2s;
+      position: relative;
+      transition: border-color 0.25s, transform 0.3s cubic-bezier(.22,.68,0,1.2), box-shadow 0.25s;
+      animation: card-in 0.55s ease both;
     }
-    .card:hover { border-color: #444; transform: translateY(-2px); }
+    .card:hover { transform: translateY(-5px); }
     a.card { text-decoration: none; color: inherit; cursor: pointer; }
+
+    @keyframes card-in {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .card-hero     { animation-delay: 0.04s; }
+    .card-remain   { animation-delay: 0.11s; }
+    .card-training { animation-delay: 0.17s; }
+    .card-linkedin { animation-delay: 0.22s; }
+    .card-threads  { animation-delay: 0.27s; }
+    .card-blog     { animation-delay: 0.32s; }
+    .card-work     { animation-delay: 0.38s; }
+    .pill-row      { animation: card-in 0.55s ease 0.44s both; }
 
     /* ── Hero card ── */
     .card-hero {
@@ -60,22 +78,69 @@
       align-items: center;
       gap: 28px;
       padding: 36px 32px;
+      background: linear-gradient(135deg, rgba(232,169,74,0.07) 0%, var(--surface) 55%);
+    }
+    .card-hero:hover {
+      border-color: rgba(232,169,74,0.3);
+      box-shadow: 0 16px 48px rgba(232,169,74,0.08), 0 4px 14px rgba(0,0,0,0.35);
+    }
+
+    /* Avatar with spinning gradient ring */
+    .avatar-wrapper {
+      flex-shrink: 0;
+      position: relative;
+      width: 96px;
+      height: 96px;
+    }
+    .avatar-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, #e8a94a, #a855f7, #3b82f6, #22c55e, #e8a94a);
+      animation: spin-ring 5s linear infinite;
+    }
+    .avatar-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      border-radius: 50%;
+      background: var(--surface);
     }
     .avatar {
+      position: relative;
+      z-index: 1;
       width: 88px;
       height: 88px;
       border-radius: 50%;
       object-fit: cover;
-      flex-shrink: 0;
       background: #222;
+      display: block;
+      margin: 4px;
     }
+    @keyframes spin-ring {
+      to { transform: rotate(360deg); }
+    }
+
     .hero-text h1 {
       font-size: clamp(1.6rem, 4vw, 2.2rem);
       font-weight: 700;
       letter-spacing: -0.03em;
       line-height: 1.1;
     }
-    .hero-text h1 span { color: var(--amber); }
+    .hero-text h1 .name-highlight {
+      background: linear-gradient(90deg, #e8a94a 0%, #f5c97a 45%, #e8a94a 60%, #c4893a 100%);
+      background-size: 250% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: name-shimmer 4s ease infinite;
+    }
+    @keyframes name-shimmer {
+      0%   { background-position: 0%   center; }
+      50%  { background-position: 100% center; }
+      100% { background-position: 0%   center; }
+    }
     .hero-text p {
       margin-top: 8px;
       color: var(--muted);
@@ -85,8 +150,17 @@
     }
 
     /* ── App cards ── */
-    .card-remain   { grid-column: span 7; }
-    .card-training { grid-column: span 5; }
+    .card-remain   { grid-column: span 7; background: linear-gradient(140deg, rgba(139,92,246,0.09) 0%, var(--surface) 55%); }
+    .card-training { grid-column: span 5; background: linear-gradient(140deg, rgba(34,197,94,0.08)  0%, var(--surface) 55%); }
+
+    .card-remain:hover {
+      border-color: rgba(139,92,246,0.4);
+      box-shadow: 0 14px 44px rgba(139,92,246,0.18), 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .card-training:hover {
+      border-color: rgba(34,197,94,0.35);
+      box-shadow: 0 14px 44px rgba(34,197,94,0.14), 0 4px 12px rgba(0,0,0,0.3);
+    }
 
     .app-tag {
       display: inline-block;
@@ -95,8 +169,8 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--amber);
-      background: rgba(232, 169, 74, 0.12);
-      border: 1px solid rgba(232, 169, 74, 0.25);
+      background: rgba(232, 169, 74, 0.14);
+      border: 1px solid rgba(232, 169, 74, 0.3);
       padding: 3px 9px;
       border-radius: 99px;
       margin-bottom: 14px;
@@ -121,9 +195,9 @@
       font-weight: 500;
       color: var(--amber);
       text-decoration: none;
-      transition: opacity 0.15s;
+      transition: opacity 0.15s, gap 0.2s;
     }
-    .card-link:hover { opacity: 0.75; }
+    .card-link:hover { opacity: 0.75; gap: 9px; }
     .card-link svg { width: 14px; height: 14px; }
 
     .tagline {
@@ -140,19 +214,32 @@
     .card-threads  { grid-column: span 4; }
     .card-blog     { grid-column: span 4; }
 
+    .card-linkedin:hover {
+      border-color: rgba(10,102,194,0.5);
+      box-shadow: 0 14px 44px rgba(10,102,194,0.18), 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .card-threads:hover {
+      border-color: rgba(255,255,255,0.18);
+      box-shadow: 0 14px 44px rgba(255,255,255,0.05), 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .card-blog:hover {
+      border-color: rgba(232,169,74,0.4);
+      box-shadow: 0 14px 44px rgba(232,169,74,0.12), 0 4px 12px rgba(0,0,0,0.3);
+    }
+
     .social-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 14px;
     }
     .social-icon svg { width: 20px; height: 20px; }
-    .icon-linkedin { background: rgba(10, 102, 194, 0.2); }
-    .icon-threads  { background: rgba(255, 255, 255, 0.08); }
-    .icon-blog     { background: rgba(232, 169, 74, 0.12); }
+    .icon-linkedin { background: rgba(10, 102, 194, 0.22); }
+    .icon-threads  { background: rgba(255, 255, 255, 0.1); }
+    .icon-blog     { background: rgba(232, 169, 74, 0.16); }
 
     .card h3 {
       font-size: 1rem;
@@ -179,8 +266,15 @@
       border-radius: 99px;
     }
 
-    /* ── Work section ── */
-    .card-work { grid-column: span 12; }
+    /* ── Work card ── */
+    .card-work {
+      grid-column: span 12;
+      background: linear-gradient(135deg, rgba(232,169,74,0.05) 0%, var(--surface) 50%);
+    }
+    .card-work:hover {
+      border-color: rgba(232,169,74,0.3);
+      box-shadow: 0 14px 44px rgba(232,169,74,0.1), 0 4px 12px rgba(0,0,0,0.3);
+    }
 
     .section-label {
       font-size: 0.65rem;
@@ -189,154 +283,6 @@
       text-transform: uppercase;
       color: var(--muted);
       margin-bottom: 20px;
-    }
-
-    /* stat cards */
-    .card-stat { grid-column: span 4; text-align: center; padding: 24px 16px; }
-    .stat-num {
-      font-size: 1.8rem;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      color: var(--amber);
-      line-height: 1;
-      margin-bottom: 6px;
-    }
-    .stat-label {
-      font-size: 0.75rem;
-      color: var(--muted);
-      line-height: 1.4;
-    }
-
-    /* timeline */
-    .timeline { display: flex; flex-direction: column; gap: 0; }
-    .tl-item {
-      display: grid;
-      grid-template-columns: 120px 1px 1fr;
-      gap: 0 20px;
-      padding-bottom: 24px;
-    }
-    .tl-item:last-child { padding-bottom: 0; }
-    .tl-date {
-      font-size: 0.72rem;
-      color: var(--muted);
-      text-align: right;
-      padding-top: 3px;
-      line-height: 1.4;
-    }
-    .tl-line {
-      position: relative;
-      background: var(--border);
-    }
-    .tl-line::before {
-      content: '';
-      position: absolute;
-      top: 6px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--amber);
-    }
-    .tl-content { padding-top: 1px; }
-    .tl-company {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--amber);
-      margin-bottom: 3px;
-    }
-    .tl-role {
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 5px;
-    }
-    .tl-desc {
-      font-size: 0.8rem;
-      color: var(--muted);
-      line-height: 1.55;
-    }
-
-    /* ── Expandable detail panels ── */
-    .tl-expand-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      margin-top: 10px;
-      font-size: 0.72rem;
-      font-weight: 500;
-      color: var(--muted);
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: 99px;
-      padding: 3px 10px;
-      cursor: pointer;
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .tl-expand-btn:hover { color: var(--amber); border-color: var(--amber); }
-    .tl-expand-btn .chevron { transition: transform 0.25s; display:inline-block; }
-    .tl-expand-btn.open .chevron { transform: rotate(180deg); }
-
-    .tl-detail {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s ease, opacity 0.25s ease;
-      opacity: 0;
-    }
-    .tl-detail.open {
-      max-height: 600px;
-      opacity: 1;
-    }
-    .tl-detail-inner {
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
-    }
-    .tl-metrics {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-    .tl-metric {
-      background: rgba(232, 169, 74, 0.08);
-      border: 1px solid rgba(232, 169, 74, 0.2);
-      border-radius: 8px;
-      padding: 6px 12px;
-      font-size: 0.75rem;
-    }
-    .tl-metric strong { color: var(--amber); display:block; font-size: 0.85rem; font-weight: 700; }
-    .tl-metric span { color: var(--muted); }
-    .tl-bullets {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    .tl-bullets li {
-      font-size: 0.8rem;
-      color: var(--muted);
-      display: flex;
-      align-items: flex-start;
-      gap: 7px;
-      line-height: 1.5;
-    }
-    .tl-bullets li::before { content:"›"; color:var(--amber); font-weight:700; flex-shrink:0; }
-    .tl-awards {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 12px;
-    }
-    .tl-award {
-      font-size: 0.7rem;
-      font-weight: 500;
-      color: var(--amber);
-      background: rgba(232,169,74,0.08);
-      border: 1px solid rgba(232,169,74,0.2);
-      border-radius: 99px;
-      padding: 3px 10px;
     }
 
     /* ── Pill row ── */
@@ -350,12 +296,24 @@
     }
     .pill {
       font-size: 0.72rem;
-      color: var(--muted);
-      background: var(--surface);
-      border: 1px solid var(--border);
       border-radius: 99px;
       padding: 5px 14px;
       letter-spacing: 0.04em;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .pill:hover { transform: translateY(-2px); }
+    .pill-blue   { color: #60a5fa; border: 1px solid rgba(96,165,250,0.3);  background: rgba(96,165,250,0.07); }
+    .pill-orange { color: #fb923c; border: 1px solid rgba(251,146,60,0.3);  background: rgba(251,146,60,0.07); }
+    .pill-teal   { color: #2dd4bf; border: 1px solid rgba(45,212,191,0.3);  background: rgba(45,212,191,0.07); }
+    .pill-silver { color: #cbd5e1; border: 1px solid rgba(203,213,225,0.22); background: rgba(203,213,225,0.05); }
+    .pill-red    { color: #f87171; border: 1px solid rgba(248,113,113,0.3); background: rgba(248,113,113,0.07); }
+
+    /* ── Reduced motion ── */
+    @media (prefers-reduced-motion: reduce) {
+      .avatar-wrapper::before { animation: none; }
+      .hero-text h1 .name-highlight { animation: none; }
+      .card { animation: none; }
+      .pill-row { animation: none; }
     }
 
     /* ── Responsive ── */
@@ -366,9 +324,8 @@
       .card-linkedin { grid-column: span 12; }
       .card-threads  { grid-column: span 12; }
       .card-blog     { grid-column: span 12; }
-      .card-stat     { grid-column: span 4; }
-      .tl-item       { grid-template-columns: 80px 1px 1fr; gap: 0 12px; }
-      .tl-date       { font-size: 0.65rem; }
+      .avatar-wrapper { width: 80px; height: 80px; }
+      .avatar { width: 72px; height: 72px; }
     }
   </style>
 </head>
@@ -377,9 +334,11 @@
 
     <!-- Hero -->
     <div class="card card-hero">
-      <img src="assets/avatar.png" alt="Raven Howard" class="avatar" />
+      <div class="avatar-wrapper">
+        <img src="assets/avatar.png" alt="Raven Howard" class="avatar" />
+      </div>
       <div class="hero-text">
-        <h1>Raven <span>Howard</span></h1>
+        <h1>Raven <span class="name-highlight">Howard</span></h1>
         <p>Curious about people, opinionated about ideas. I work in enterprise SaaS, build iOS apps, and serve my community in Charleston, SC. Husband and dad.</p>
       </div>
     </div>
@@ -388,7 +347,7 @@
     <a class="card card-remain" href="remain/">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
         <span class="app-tag" style="margin-bottom:0;">App</span>
-        <span class="badge-soon">Coming soon</span>
+        <span class="badge-soon" style="margin-top:0;">Coming soon</span>
       </div>
       <h2>Remain</h2>
       <p class="desc">A contemplative space for your whole spiritual life — Scripture reading, meditation, breathwork, and journaling woven into one intentional practice.</p>
@@ -409,7 +368,7 @@
           Learn more
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="https://apps.apple.com/us/app/training-stack/id6757607761" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;font-weight:500;color:var(--text);background:rgba(255,255,255,0.06);border:1px solid var(--border);padding:5px 12px;border-radius:99px;text-decoration:none;transition:border-color 0.15s;" onmouseover="this.style.borderColor='#666'" onmouseout="this.style.borderColor='var(--border)'">
+        <a href="https://apps.apple.com/us/app/training-stack/id6757607761" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;font-size:0.8rem;font-weight:500;color:var(--text);background:rgba(255,255,255,0.06);border:1px solid var(--border);padding:5px 12px;border-radius:99px;text-decoration:none;transition:border-color 0.15s,background 0.15s;" onmouseover="this.style.borderColor='rgba(34,197,94,0.5)';this.style.background='rgba(34,197,94,0.08)'" onmouseout="this.style.borderColor='var(--border)';this.style.background='rgba(255,255,255,0.06)'">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
           App Store
         </a>
@@ -467,11 +426,11 @@
 
     <!-- Pill row -->
     <div class="pill-row">
-      <span class="pill">iOS Developer</span>
-      <span class="pill">SwiftUI</span>
-      <span class="pill">Product</span>
-      <span class="pill">Apple Watch</span>
-      <span class="pill">HealthKit</span>
+      <span class="pill pill-blue">iOS Developer</span>
+      <span class="pill pill-orange">SwiftUI</span>
+      <span class="pill pill-teal">Product</span>
+      <span class="pill pill-silver">Apple Watch</span>
+      <span class="pill pill-red">HealthKit</span>
     </div>
 
   </div>
