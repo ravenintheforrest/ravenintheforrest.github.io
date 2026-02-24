@@ -115,16 +115,17 @@
     }
 
     /* ── Stats ── */
-    .card-stat { grid-column: span 4; text-align: center; padding: 24px 16px; }
+    .card-stat { grid-column: span 4; text-align: center; padding: 24px 12px; }
     .stat-num {
-      font-size: 1.8rem;
+      font-size: clamp(1.1rem, 3.5vw, 1.8rem);
       font-weight: 800;
-      letter-spacing: -0.04em;
+      letter-spacing: -0.03em;
       color: var(--amber);
       line-height: 1;
       margin-bottom: 6px;
+      word-break: break-word;
     }
-    .stat-label { font-size: 0.75rem; color: var(--muted); line-height: 1.4; }
+    .stat-label { font-size: clamp(0.65rem, 1.8vw, 0.75rem); color: var(--muted); line-height: 1.4; }
 
     /* ── Section label ── */
     .section-label {
