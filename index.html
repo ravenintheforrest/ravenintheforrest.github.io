@@ -82,7 +82,8 @@
     .card-threads  { animation-delay: 0.27s; }
     .card-blog     { animation-delay: 0.32s; }
     .card-work     { animation-delay: 0.38s; }
-    .pill-row      { animation: card-in 0.55s ease 0.44s both; }
+    .card-projects { animation-delay: 0.43s; }
+    .pill-row      { animation: card-in 0.55s ease 0.48s both; }
 
     /* ── Hero card ── */
     .card-hero {
@@ -279,6 +280,58 @@
       border-radius: 99px;
     }
 
+    /* ── Projects card ── */
+    .card-projects {
+      grid-column: span 12;
+    }
+    .card-projects:hover {
+      border-color: rgba(139,92,246,0.3);
+      box-shadow: 0 14px 44px rgba(139,92,246,0.1), 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .project-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 10px;
+    }
+    .project-item {
+      display: block;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.02);
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .project-item:hover {
+      border-color: rgba(139,92,246,0.4);
+      background: rgba(139,92,246,0.05);
+    }
+    .project-item-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 4px;
+    }
+    .project-item-desc {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .project-item-tag {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #a78bfa;
+      background: rgba(139,92,246,0.12);
+      border: 1px solid rgba(139,92,246,0.2);
+      padding: 2px 8px;
+      border-radius: 99px;
+    }
+
     /* ── Work card ── */
     .card-work {
       grid-column: span 12;
@@ -432,6 +485,18 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </span>
     </a>
+
+    <!-- Other Projects -->
+    <div class="card card-projects">
+      <p class="section-label">Other Projects</p>
+      <div class="project-items">
+        <a class="project-item" href="/church/psalm1/">
+          <div class="project-item-title">Psalm 1 — Interactive Study</div>
+          <p class="project-item-desc">Explore the Hebrew poetry of Psalm 1 verse by verse. Click any word or verse to surface insights, cross-references, and BibleProject notes.</p>
+          <span class="project-item-tag">Faith</span>
+        </a>
+      </div>
+    </div>
 
     <!-- Pill row -->
     <div class="pill-row">

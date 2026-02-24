@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="/assets/avatar.png" />
+  <title>Psalm 1 Interactive — Raven Howard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0e0e0f;
+      --surface:    #161618;
+      --surface2:   #1c1c1f;
+      --border:     #2a2a2e;
+      --amber:      #e8a94a;
+      --amber-soft: rgba(232,169,74,0.12);
+      --text:       #f0ede8;
+      --muted:      #888580;
+      --radius:     12px;
+      --sheet-h:    68vh;
+    }
+
+    body {
+      background:
+        radial-gradient(ellipse 70% 45% at 8% 0%,   rgba(139,92,246,0.04) 0%, transparent 100%),
+        radial-gradient(ellipse 60% 40% at 92% 100%, rgba(232,169,74,0.06) 0%, transparent 100%),
+        var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100vh;
+      padding: 28px 14px 48px;
+    }
+
+    /* ── Nav ── */
+    .nav {
+      width: min(1300px, 100%);
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav a {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav a:hover { color: var(--amber); }
+    .nav-sep     { font-size: 0.8rem; color: var(--border); }
+    .nav-current { font-size: 0.8rem; color: var(--muted); }
+
+    /* ── Desktop 3-col layout ── */
+    .layout {
+      width: min(1300px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 290px minmax(0,1fr) 290px;
+      gap: 14px;
+      align-items: start;
+    }
+
+    /* ── Card base ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    /* ── Desktop side panels ── */
+    .side {
+      position: sticky;
+      top: 14px;
+      min-height: 280px;
+      padding: 18px 16px;
+      opacity: 0.35;
+      transform: translateY(4px);
+      transition: opacity 230ms ease, transform 230ms ease;
+    }
+    .side.active { opacity: 1; transform: translateY(0); }
+
+    /* ── Shared content styles ── */
+    .kicker {
+      display: inline-block;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      background: var(--amber-soft);
+      border: 1px solid rgba(232,169,74,0.25);
+      padding: 3px 9px;
+      border-radius: 99px;
+      margin-bottom: 12px;
+    }
+    .focus-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .focus-body {
+      font-size: 0.83rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .chips {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .chip {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 3px 10px;
+      background: var(--surface2);
+    }
+    .verse-insights {
+      margin-top: 14px;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+    }
+    .verse-insights h3 {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .insight-item {
+      margin: 0 0 8px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface2);
+      font-size: 0.79rem;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+    .insight-item strong { color: var(--amber); font-weight: 600; }
+
+    details {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface2);
+      margin-bottom: 8px;
+      padding: 10px 12px;
+    }
+    summary {
+      list-style: none;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--amber);
+      font-size: 0.82rem;
+      letter-spacing: -0.01em;
+    }
+    summary::-webkit-details-marker { display: none; }
+    .ref-note {
+      margin: 8px 0 4px;
+      color: var(--muted);
+      font-size: 0.79rem;
+      line-height: 1.5;
+    }
+    .quote {
+      margin: 6px 0 2px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: #b0aca7;
+      font-size: 0.79rem;
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    /* ── Center panel ── */
+    .center-wrap { padding: 28px 24px 32px; }
+
+    .psalm-header { text-align: center; margin-bottom: 28px; }
+    .psalm-header h1 {
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    .psalm-header h1 .num { color: var(--amber); }
+    .ashre {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-style: italic;
+      letter-spacing: 0.03em;
+    }
+
+    .psalm { display: grid; gap: 8px; }
+
+    .verse {
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: border-color 160ms ease, background 160ms ease;
+      font-size: clamp(0.92rem, 1.8vw, 1rem);
+      line-height: 1.8;
+      color: var(--text);
+    }
+    .verse:hover,
+    .verse.active {
+      border-color: rgba(232,169,74,0.3);
+      background: rgba(232,169,74,0.04);
+    }
+    .verse sup {
+      margin-right: 6px;
+      color: var(--amber);
+      font-size: 0.68rem;
+      font-weight: 700;
+      position: relative;
+      top: -0.35em;
+    }
+
+    .word {
+      border: 0;
+      background: transparent;
+      color: inherit;
+      border-bottom: 1.5px dashed rgba(232,169,74,0.5);
+      padding: 0 1px;
+      cursor: pointer;
+      font: inherit;
+      transition: 140ms ease;
+    }
+    .word:hover,
+    .word.active {
+      border-bottom-color: var(--amber);
+      background: var(--amber-soft);
+      border-radius: 3px;
+      color: var(--amber);
+    }
+
+    .hint {
+      margin: 20px auto 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+      text-align: center;
+      opacity: 0.6;
+    }
+
+    /* ── Credit ── */
+    .credit {
+      width: min(1300px, 100%);
+      margin: 14px auto 0;
+      text-align: center;
+      color: #444;
+      font-size: 0.72rem;
+    }
+    .credit a {
+      color: var(--muted);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color 0.15s;
+    }
+    .credit a:hover { color: var(--amber); }
+
+    /* ════════════════════════════════
+       MOBILE BOTTOM SHEET
+       ════════════════════════════════ */
+
+    /* Scrim */
+    #scrim {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      z-index: 40;
+      opacity: 0;
+      transition: opacity 280ms ease;
+    }
+    #scrim.visible {
+      display: block;
+    }
+    #scrim.open {
+      opacity: 1;
+    }
+
+    /* Sheet */
+    #sheet {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: var(--sheet-h);
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-radius: 20px 20px 0 0;
+      z-index: 50;
+      transform: translateY(100%);
+      transition: transform 320ms cubic-bezier(0.32, 0.72, 0, 1);
+      overflow: hidden;
+      flex-direction: column;
+    }
+    #sheet.open {
+      transform: translateY(0);
+    }
+
+    /* Drag handle */
+    .sheet-handle {
+      flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      padding: 12px 0 4px;
+      cursor: grab;
+    }
+    .sheet-handle::before {
+      content: '';
+      width: 36px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 99px;
+    }
+
+    /* Sheet header: tabs + close */
+    .sheet-header {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      padding: 0 16px 0 12px;
+      gap: 4px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sheet-tabs {
+      display: flex;
+      flex: 1;
+      gap: 2px;
+    }
+    .sheet-tab {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font: 600 0.82rem/1 'Inter', sans-serif;
+      padding: 12px 14px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+      letter-spacing: -0.01em;
+    }
+    .sheet-tab.active {
+      color: var(--amber);
+      border-bottom-color: var(--amber);
+    }
+    .sheet-close {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1.2rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 8px;
+      transition: color 0.15s, background 0.15s;
+      margin-left: 4px;
+    }
+    .sheet-close:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+
+    /* Sheet content panels */
+    .sheet-body {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .sheet-panel {
+      display: none;
+      padding: 16px 16px 32px;
+    }
+    .sheet-panel.active { display: block; }
+
+    /* Context label inside sheet */
+    .sheet-context {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    /* ── Mobile: hide desktop side panels, show sheet ── */
+    @media (max-width: 1100px) {
+      .layout { grid-template-columns: 1fr; }
+      .side {
+        display: none; /* replaced by sheet on mobile */
+      }
+      .center-wrap { order: 1; }
+
+      /* Sheet is a flex column by default, just toggle visibility via JS */
+      #sheet { display: flex; }
+
+      /* Body padding when sheet is open so psalm scrolls above it */
+      body.sheet-open {
+        padding-bottom: calc(var(--sheet-h) + 16px);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .center-wrap { padding: 20px 16px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Scrim -->
+  <div id="scrim"></div>
+
+  <!-- Bottom sheet (mobile only) -->
+  <div id="sheet" role="dialog" aria-modal="true" aria-label="Verse details">
+    <div class="sheet-handle" id="sheetHandle"></div>
+    <div class="sheet-header">
+      <div class="sheet-tabs">
+        <button class="sheet-tab active" data-tab="insight">Insight</button>
+        <button class="sheet-tab" data-tab="refs">Cross Refs</button>
+      </div>
+      <button class="sheet-close" id="sheetClose" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+      <!-- Insight tab -->
+      <div class="sheet-panel active" id="sheetInsightPanel">
+        <p class="sheet-context" id="sheetContext"></p>
+        <h2 class="focus-title" id="sheetTitle">Select a verse or underlined word</h2>
+        <p class="focus-body" id="sheetBody"></p>
+        <div class="chips" id="sheetChips"></div>
+        <div class="verse-insights" id="sheetVerseInsights"></div>
+      </div>
+      <!-- Cross refs tab -->
+      <div class="sheet-panel" id="sheetRefsPanel">
+        <div id="sheetRefs"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nav breadcrumb -->
+  <nav class="nav">
+    <a href="/">ravenhoward.org</a>
+    <span class="nav-sep">/</span>
+    <span class="nav-current">Psalm 1</span>
+  </nav>
+
+  <div class="layout">
+
+    <!-- Left: Desktop insight panel -->
+    <aside class="card side left" id="insightPanel">
+      <p class="kicker">Insight</p>
+      <h2 class="focus-title" id="insightTitle">Select a verse or underlined word</h2>
+      <p class="focus-body" id="insightBody"></p>
+      <div class="chips" id="insightChips"></div>
+      <div class="verse-insights" id="verseInsights"></div>
+    </aside>
+
+    <!-- Center: Psalm text -->
+    <main class="card center-wrap">
+      <div class="psalm-header">
+        <h1>Psalm <span class="num">1</span></h1>
+        <p class="ashre">'Ashre ha'ish 'asher</p>
+      </div>
+
+      <section class="psalm" id="psalmText">
+        <p class="verse" data-verse="v1"><sup>1</sup> How good is life for the man who doesn't <button class="word" data-term="walk">walk</button> by the <button class="word" data-term="counsel">counsel</button> of the <button class="word" data-term="wicked">wicked</button>. And in the path of sinners, he does not <button class="word" data-term="stand">stand</button>. And in the seat of mockers, he does not <button class="word" data-term="sit">sit</button>.</p>
+        <p class="verse" data-verse="v2"><sup>2</sup> Rather, in the <button class="word" data-term="torah">instruction</button> of Yahweh is his <button class="word" data-term="delight">delight</button>, and on his instruction he <button class="word" data-term="meditate">meditates</button> day and night.</p>
+        <p class="verse" data-verse="v3"><sup>3</sup> And he will become like a <button class="word" data-term="tree">tree</button> planted by <button class="word" data-term="streams">streams</button> of water, which gives its <button class="word" data-term="fruit">fruit</button> in its time, and its leaf does not wither. And everything he will do, he makes successful.</p>
+        <p class="verse" data-verse="v4"><sup>4</sup> Not so, the wicked. Rather, he is like <button class="word" data-term="chaff">chaff</button> that the wind drives away.</p>
+        <p class="verse" data-verse="v5"><sup>5</sup> Therefore, the wicked will not stand in the <button class="word" data-term="judgment">judgment</button> nor sinners in the assembly of the righteous.</p>
+        <p class="verse" data-verse="v6"><sup>6</sup> Because Yahweh <button class="word" data-term="know">knows</button> the path of the righteous, but the path of the wicked will <button class="word" data-term="perish">perish</button>.</p>
+      </section>
+
+      <p class="hint" id="hint">Tap any verse or underlined word to explore.</p>
+    </main>
+
+    <!-- Right: Desktop cross references panel -->
+    <aside class="card side right" id="refsPanel">
+      <p class="kicker">Cross References</p>
+      <div class="refs" id="refs"></div>
+    </aside>
+
+  </div>
+
+  <p class="credit">From BibleProject Podcast: Psalm 1–2, Episode 1 (Psalm 1).</p>
+  <p class="credit"><a href="https://bibleproject.com/podcasts/the-good-life-according-to-psalm-1/" target="_blank" rel="noopener noreferrer">The Good Life According to Psalm 1 →</a></p>
+
+  <script>
+    /* ─── Data ─────────────────────────────────────────── */
+    const verseData = {
+      v1: {
+        title: "Verse 1",
+        body: "🧭 The opening line names an ideal life, then delays the positive by giving three negatives. The sequence walk, stand, sit is a moral story: daily decisions, then settled habits, then a fixed seat of contempt. The episode framed this as the tragedy of repeated bad input that can end in cynical mockery.",
+        chips: ["Progression", "Counsel", "Mockery"],
+        refs: [
+          { ref: "Judges 20:16", note: "🎯 Missing the mark background.", quote: "Among all these soldiers there were seven hundred chosen men who were left-handed. Every one of them could sling a stone at a hair and not miss." }
+        ]
+      },
+      v2: {
+        title: "Verse 2",
+        body: "📖 Verse 2 answers verse 1 with a 'rather': not counsel of the wicked, but instruction of Yahweh. The episode emphasized that delight drives meditation; what arrests our imagination becomes what we rehearse. Hagah was described as quiet recitation and focused rumination, a formed attentiveness day and night.",
+        chips: ["Torah", "Delight", "Meditation"],
+        refs: [
+          { ref: "Isaiah 31:4", note: "🦁 Hagah imagery.", quote: "For Yahweh says to me, As the lion and the young lion growling over his prey ... so Yahweh of Armies will come down to fight on Mount Zion and on its heights." },
+          { ref: "Isaiah 38:14", note: "🕊️ Murmuring voice imagery.", quote: "I chattered like a swallow or a crane. I moaned like a dove." },
+          { ref: "Psalm 71:24", note: "🗣️ Tongue meditation language.", quote: "My tongue will also talk about your righteousness all day long." }
+        ]
+      },
+      v3: {
+        title: "Verse 3",
+        body: "🌳 The image shifts from path to tree. A tree is planted, not self-planted, so life is received from outside the self. The stream imagery was linked to Eden and ongoing renewal. Fruit in season was treated as generated value for others, and success as whole-life trajectory rather than every individual moment.",
+        chips: ["Tree", "Streams", "Fruit"],
+        refs: [
+          { ref: "Genesis 2:6", note: "💧 Watering image.", quote: "A mist went up from the earth, and watered the whole surface of the ground." },
+          { ref: "Genesis 2:10", note: "🏞️ River and garden image.", quote: "A river went out of Eden to water the garden; and from there it was parted, and became the source of four rivers." },
+          { ref: "Genesis 39:2-3", note: "👑 Joseph and prospering arc.", quote: "Yahweh was with Joseph, and he was a prosperous man. He was in the house of his master the Egyptian. His master saw that Yahweh was with him, and that Yahweh made all that he did prosper in his hand." }
+        ]
+      },
+      v4: {
+        title: "Verse 4",
+        body: "🌾 The poem turns with a hard contrast: not so the wicked. Chaff was described in the episode as dry husk separated from grain, light enough to be blown away. This gives the opposite portrait of the tree: not rooted, not life-giving, not enduring.",
+        chips: ["Contrast", "Instability", "Warning"],
+        refs: [
+          { ref: "Job 1:21", note: "🕯️ Suffering and faithfulness.", quote: "Naked I came out of my mother's womb, and naked shall I return there. Yahweh gave, and Yahweh has taken away. Blessed be Yahweh's name." }
+        ]
+      },
+      v5: {
+        title: "Verse 5",
+        body: "⚖️ Mishpat was presented as judgment in the sense of justice decisions that shape communal life. Verse 5 widens that to ultimate sorting: who stands in the assembly of the righteous. The episode emphasized this as clarity about moral reality, not a license for self-righteous labeling.",
+        chips: ["Mishpat", "Assembly", "Justice"],
+        refs: [
+          { ref: "Exodus 18:21", note: "🏛️ Justice structure.", quote: "Moreover you shall provide out of all the people able men which fear God: men of truth, hating unjust gain; and place such over them, to be rulers of thousands, rulers of hundreds, rulers of fifties, and rulers of tens." },
+          { ref: "1 Corinthians 3:13-15", note: "🔥 Work tested in the Day.", quote: "Each man's work will be revealed. For the Day will declare it, because it is revealed in fire; and the fire itself will test what sort of work each man's work is. If any man's work remains which he built on it, he will receive a reward. If any man's work is burned, he will suffer loss, but he himself will be saved, but as through fire." }
+        ]
+      },
+      v6: {
+        title: "Verse 6",
+        body: "🤝 The last line returns to the path metaphor. 'Yahweh knows' was explained as relational union, not abstract information. By contrast, the wicked path perishes: not necessarily active destruction language, but a way of life that goes lost and collapses away from the source of life.",
+        chips: ["Knowing", "Way", "Perishing"],
+        refs: [
+          { ref: "Genesis 4:1", note: "💞 Know as relational intimacy.", quote: "The man knew Eve his wife. She conceived, and gave birth to Cain, and said, I have gotten a man with Yahweh's help." },
+          { ref: "1 Samuel 9:3-4", note: "🧭 Lostness image.", quote: "The donkeys of Kish, Saul's father, were lost ... they passed through the land ... but they didn't find them." },
+          { ref: "Luke 18:13-14", note: "🙏 Humble posture.", quote: "But the tax collector, standing far away, wouldn't even lift up his eyes to heaven, but beat his breast, saying, God, be merciful to me, a sinner. I tell you, this man went down to his house justified rather than the other." },
+          { ref: "Psalm 2:1-2", note: "👑 Framing pair with Psalm 2.", quote: "Why do the nations rage, and the peoples plot a vain thing? The kings of the earth take a stand, and the rulers take counsel together, against Yahweh, and against his Anointed." }
+        ]
+      }
+    };
+
+    const wordData = {
+      walk:     { verse:"v1", title:"Walk",       body:"🚶 Walk names the early stage of formation: ordinary choices, repeated over time, that set direction before outcomes are obvious.",                                                                         chips:["Trajectory","Decision","Direction"],    refs:[{ref:"Psalm 1:1",     note:"🪜 Opening movement.",       quote:"Blessed is the man who doesn't walk in the counsel of the wicked."}] },
+      counsel:  { verse:"v1", title:"Counsel",    body:"🗺️ Counsel is the voice that calibrates your compass. The episode stressed that no one walks without input; the question is whose instruction forms your decisions.",                                         chips:["Voice","Influence","Formation"],        refs:[{ref:"Psalm 2:2",     note:"📣 Counsel language repeated.", quote:"The rulers take counsel together, against Yahweh, and against his Anointed."}] },
+      wicked:   { verse:"v1", title:"Wicked",     body:"🚫 Wicked (rasha') was treated as a covenant category: a life trajectory that rejects God's wisdom and so produces distorted counsel.",                                                                        chips:["Contrast","Category","Warning"],        refs:[{ref:"Psalm 1:4",     note:"🫧 Parallel image.",          quote:"The wicked are not so, but are like the chaff which the wind drives away."}] },
+      stand:    { verse:"v1", title:"Stand",      body:"🧍 Stand is the in-between moment where a passing choice becomes a repeated stance and eventually a settled way of life.",                                                                                      chips:["Posture","Settling","Pattern"],         refs:[{ref:"Psalm 24:3",    note:"⛰️ Standing language.",       quote:"Who may stand in his holy place?"}] },
+      sit:      { verse:"v1", title:"Sit",        body:"🪑 Sit is the endpoint of the progression: stationing yourself in the seat of mockers, postured above others with contempt.",                                                                                  chips:["Fixity","Mockery","Seat"],              refs:[{ref:"Psalm 1:1",     note:"🗨️ Seat of scoffers.",        quote:"Nor sit in the seat of scoffers."}] },
+      delight:  { verse:"v2", title:"Delight",    body:"💡 Delight is more than duty; it is desire fulfilled. The episode linked delight to where attention goes in unguarded moments.",                                                                                chips:["Desire","Attention","Joy"],             refs:[{ref:"Psalm 1:2",     note:"🎵 Center line.",             quote:"His delight is in Yahweh's law."}] },
+      torah:    { verse:"v2", title:"Law (Torah)", body:"📜 Torah here is Yahweh's instruction and voice, not merely rule-listing. It is the alternative source to the counsel of the wicked.",                                                                        chips:["Instruction","Wisdom","Voice"],         refs:[{ref:"Psalm 1:2",     note:"🕯️ Instruction repeated.",    quote:"On his law he meditates day and night."}] },
+      meditate: { verse:"v2", title:"Meditates",  body:"🫧 Meditation (hagah) was described as quiet speech and recitation that focuses the mind on one text until its meaning works into the imagination.",                                                            chips:["Hagah","Recitation","Focus"],           refs:[{ref:"Psalm 71:24",   note:"🗣️ Speech and meditation.",   quote:"My tongue will also talk about your righteousness all day long."}] },
+      tree:     { verse:"v3", title:"Tree",       body:"🌳 The tree embodies stability, endurance, and outward fruitfulness. It stands in contrast to the mocker who opts out of doing good for others.",                                                               chips:["Rooted","Durable","Life-giving"],       refs:[{ref:"Psalm 1:3",     note:"🌱 Core image.",              quote:"He will be like a tree planted by the streams of water."}] },
+      streams:  { verse:"v3", title:"Streams",    body:"🌊 Streams signify ongoing, renewing provision. The episode linked this to Eden imagery and life sourced beyond the self.",                                                                                     chips:["Source","Flow","Provision"],            refs:[{ref:"Genesis 2:10",  note:"🏞️ Eden stream.",             quote:"A river went out of Eden to water the garden."}] },
+      fruit:    { verse:"v3", title:"Fruit",      body:"🍇 Fruit means generated value in season. This is not merely inner spirituality but tangible good that nourishes others.",                                                                                      chips:["Yield","Season","Benefit"],             refs:[{ref:"Psalm 1:3",     note:"⏳ Outcome line.",             quote:"That produces its fruit in its season."}] },
+      chaff:    { verse:"v4", title:"Chaff",      body:"🌾 Chaff is what remains when life-giving grain is absent: dry, insubstantial, and carried away without rooted endurance.",                                                                                     chips:["Weightless","Dry","Driven"],            refs:[{ref:"Psalm 1:4",     note:"🍂 Contrast image.",          quote:"The wicked are not so, but are like the chaff which the wind drives away."}] },
+      judgment: { verse:"v5", title:"Judgment",   body:"⚖️ Judgment (mishpat) names accountable public justice now and anticipates final moral clarity in God's ultimate sorting.",                                                                                     chips:["Mishpat","Accountability","Justice"],   refs:[{ref:"Exodus 18:21",  note:"🏛️ Judicial structure.",      quote:"Provide ... men of truth, hating unjust gain; and place such over them."}] },
+      know:     { verse:"v6", title:"Knows",      body:"🤝 Know points to relational intimacy and union. The righteous way is known by Yahweh because it aligns with his own life-giving way.",                                                                         chips:["Intimacy","Union","Covenant"],          refs:[{ref:"Genesis 4:1",   note:"💞 Relational knowing.",      quote:"The man knew Eve his wife. She conceived, and gave birth to Cain."}] },
+      perish:   { verse:"v6", title:"Perish",     body:"🕳️ Perish ('avad) was unpacked as becoming lost. The wicked path collapses by its own direction away from life's source.",                                                                                      chips:["Loss","Ruin","End"],                    refs:[{ref:"1 Samuel 9:3",  note:"🧭 Lostness verb image.",     quote:"The donkeys of Kish, Saul's father, were lost."}] }
+    };
+
+    /* ─── DOM refs ─────────────────────────────────────── */
+    const insightPanel   = document.getElementById("insightPanel");
+    const refsPanel      = document.getElementById("refsPanel");
+    const insightTitle   = document.getElementById("insightTitle");
+    const insightBody    = document.getElementById("insightBody");
+    const insightChips   = document.getElementById("insightChips");
+    const verseInsights  = document.getElementById("verseInsights");
+    const refsEl         = document.getElementById("refs");
+    const verses         = document.querySelectorAll(".verse");
+    const words          = document.querySelectorAll(".word");
+
+    // Sheet elements
+    const sheet          = document.getElementById("sheet");
+    const scrim          = document.getElementById("scrim");
+    const sheetClose     = document.getElementById("sheetClose");
+    const sheetContext   = document.getElementById("sheetContext");
+    const sheetTitle     = document.getElementById("sheetTitle");
+    const sheetBody      = document.getElementById("sheetBody");
+    const sheetChips     = document.getElementById("sheetChips");
+    const sheetVerseIns  = document.getElementById("sheetVerseInsights");
+    const sheetRefs      = document.getElementById("sheetRefs");
+    const sheetTabs      = document.querySelectorAll(".sheet-tab");
+
+    /* ─── Sheet open / close ────────────────────────────── */
+    let activeVerseEl = null;
+
+    function openSheet() {
+      scrim.classList.add("visible");
+      requestAnimationFrame(() => {
+        scrim.classList.add("open");
+        sheet.classList.add("open");
+      });
+      document.body.classList.add("sheet-open");
+      // Scroll active verse to just above the sheet
+      if (activeVerseEl) {
+        setTimeout(() => {
+          activeVerseEl.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 60);
+      }
+    }
+
+    function closeSheet() {
+      sheet.classList.remove("open");
+      scrim.classList.remove("open");
+      document.body.classList.remove("sheet-open");
+      setTimeout(() => scrim.classList.remove("visible"), 300);
+      // Jump back to active verse
+      if (activeVerseEl) {
+        activeVerseEl.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+
+    sheetClose.addEventListener("click", closeSheet);
+    scrim.addEventListener("click", closeSheet);
+
+    // Tab switching
+    sheetTabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        sheetTabs.forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+        const target = tab.dataset.tab;
+        document.getElementById("sheetInsightPanel").classList.toggle("active", target === "insight");
+        document.getElementById("sheetRefsPanel").classList.toggle("active", target === "refs");
+      });
+    });
+
+    // Swipe-down to close
+    let touchStartY = 0;
+    sheet.addEventListener("touchstart", e => { touchStartY = e.touches[0].clientY; }, { passive: true });
+    sheet.addEventListener("touchend", e => {
+      const diff = e.changedTouches[0].clientY - touchStartY;
+      if (diff > 80) closeSheet();
+    }, { passive: true });
+
+    /* ─── Build refs HTML ───────────────────────────────── */
+    function refsHTML(refs) {
+      return refs.map(r => `
+        <details open>
+          <summary>${r.ref}</summary>
+          <p class="ref-note">${r.note}</p>
+          <p class="quote">${r.quote}</p>
+        </details>
+      `).join("");
+    }
+
+    /* ─── Build verse-insights HTML ────────────────────── */
+    function buildVerseInsights(verseId) {
+      const related = Object.entries(wordData)
+        .filter(([, d]) => d.verse === verseId)
+        .map(([, d]) => d);
+      if (!related.length) return "";
+      return `<h3>All Verse Insights</h3>${related.map(d =>
+        `<p class="insight-item"><strong>${d.title}:</strong> ${d.body}</p>`
+      ).join("")}`;
+    }
+
+    /* ─── Main render ───────────────────────────────────── */
+    function isMobile() { return window.innerWidth <= 1100; }
+
+    function render(payload, mode, verseId) {
+      const viHTML = mode === "verse" ? buildVerseInsights(verseId) : "";
+      const rHTML  = refsHTML(payload.refs);
+      const chHTML = payload.chips.map(c => `<span class="chip">${c}</span>`).join("");
+
+      if (isMobile()) {
+        // Populate sheet
+        sheetContext.textContent = mode === "word" ? "Word Study" : "Verse";
+        sheetTitle.textContent   = payload.title;
+        sheetBody.textContent    = payload.body;
+        sheetChips.innerHTML     = chHTML;
+        sheetVerseIns.innerHTML  = viHTML;
+        sheetRefs.innerHTML      = rHTML;
+        // Reset to insight tab
+        sheetTabs.forEach(t => t.classList.toggle("active", t.dataset.tab === "insight"));
+        document.getElementById("sheetInsightPanel").classList.add("active");
+        document.getElementById("sheetRefsPanel").classList.remove("active");
+        openSheet();
+      } else {
+        // Desktop panels
+        insightTitle.textContent = payload.title;
+        insightBody.textContent  = payload.body;
+        insightChips.innerHTML   = chHTML;
+        verseInsights.innerHTML  = viHTML;
+        refsEl.innerHTML         = rHTML;
+        insightPanel.classList.add("active");
+        refsPanel.classList.add("active");
+      }
+    }
+
+    /* ─── Verse clicks ──────────────────────────────────── */
+    verses.forEach(v => {
+      v.addEventListener("click", e => {
+        if (e.target.classList.contains("word")) return;
+        const id = v.dataset.verse;
+        words.forEach(w => w.classList.remove("active"));
+        verses.forEach(x => x.classList.remove("active"));
+        v.classList.add("active");
+        activeVerseEl = v;
+        render(verseData[id], "verse", id);
+      });
+    });
+
+    /* ─── Word clicks ───────────────────────────────────── */
+    words.forEach(w => {
+      w.addEventListener("click", e => {
+        e.stopPropagation();
+        const key = w.dataset.term;
+        const payload = wordData[key];
+        if (!payload) return;
+        words.forEach(x => x.classList.remove("active"));
+        verses.forEach(x => x.classList.remove("active"));
+        w.classList.add("active");
+        const verse = document.querySelector(`.verse[data-verse='${payload.verse}']`);
+        if (verse) { verse.classList.add("active"); activeVerseEl = verse; }
+        render(payload, "word", payload.verse);
+      });
+    });
+
+    /* ─── Hint text by device ───────────────────────────── */
+    const hint = document.getElementById("hint");
+    if (isMobile()) hint.textContent = "Tap any verse or underlined word to explore.";
+    else hint.textContent = "Click any verse or underlined word to explore.";
+  </script>
+</body>
+</html>
