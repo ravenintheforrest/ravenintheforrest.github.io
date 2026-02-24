@@ -187,7 +187,7 @@
       border: 1px solid rgba(232, 169, 74, 0.3);
       padding: 3px 9px;
       border-radius: 99px;
-      margin-bottom: 14px;
+      margin-bottom: 0;
     }
     .card h2 {
       font-size: 1.25rem;
@@ -223,15 +223,54 @@
       text-transform: uppercase;
     }
 
-    /* ── App icon ── */
+    /* ── App header (icon + title row) ── */
+    .app-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
     .app-icon {
       width: 52px;
       height: 52px;
       border-radius: 13px;
       object-fit: cover;
       display: block;
-      margin-bottom: 16px;
       flex-shrink: 0;
+    }
+    .app-header-text {
+      flex: 1;
+      min-width: 0;
+    }
+    .app-header-text .badges {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 5px;
+    }
+    .app-header-text h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .app-icon-remain {
+      animation: breathe-remain 4s ease-in-out infinite;
+    }
+    .app-icon-training {
+      animation: breathe-training 3.8s ease-in-out infinite;
+      animation-delay: 0.6s;
+    }
+    @keyframes breathe-remain {
+      0%, 100% { box-shadow: 0 0 6px 1px rgba(210,210,210,0.08), 0 0 0 1px rgba(255,255,255,0.06); }
+      50%       { box-shadow: 0 0 18px 5px rgba(210,210,210,0.2),  0 0 0 1px rgba(255,255,255,0.12); }
+    }
+    @keyframes breathe-training {
+      0%, 100% { box-shadow: 0 0 6px 1px rgba(228,95,35,0.12), 0 0 0 1px rgba(228,95,35,0.1); }
+      50%       { box-shadow: 0 0 20px 6px rgba(228,95,35,0.28), 0 0 0 1px rgba(228,95,35,0.2); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .app-icon-remain, .app-icon-training { animation: none; }
     }
 
     /* ── Social cards ── */
@@ -279,7 +318,7 @@
 
     .badge-soon {
       display: inline-block;
-      margin-top: 12px;
+      margin-top: 0;
       font-size: 0.65rem;
       font-weight: 600;
       letter-spacing: 0.08em;
@@ -418,12 +457,16 @@
 
     <!-- Remain -->
     <a class="card card-remain" href="remain/">
-      <img src="assets/remain-icon.png" alt="Remain app icon" class="app-icon" />
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
-        <span class="app-tag" style="margin-bottom:0;">App</span>
-        <span class="badge-soon" style="margin-top:0;">Coming soon</span>
+      <div class="app-header">
+        <img src="assets/remain-icon.png" alt="Remain app icon" class="app-icon app-icon-remain" />
+        <div class="app-header-text">
+          <div class="badges">
+            <span class="app-tag">App</span>
+            <span class="badge-soon">Coming soon</span>
+          </div>
+          <h2>Remain</h2>
+        </div>
       </div>
-      <h2>Remain</h2>
       <p class="desc">A contemplative space for your whole spiritual life — Scripture reading, meditation, breathwork, and journaling woven into one intentional practice.</p>
       <p class="tagline">Head · Hands · Heart</p>
       <span class="card-link">
@@ -434,9 +477,13 @@
 
     <!-- Training Stack -->
     <div class="card card-training">
-      <img src="assets/training-stack-icon.png" alt="Training Stack app icon" class="app-icon" />
-      <span class="app-tag">App</span>
-      <h2>Training Stack</h2>
+      <div class="app-header">
+        <img src="assets/training-stack-icon.png" alt="Training Stack app icon" class="app-icon app-icon-training" />
+        <div class="app-header-text">
+          <div class="badges"><span class="app-tag">App</span></div>
+          <h2>Training Stack</h2>
+        </div>
+      </div>
       <p class="desc">Run & strength tracking in one beautiful app. Plans, analytics, Apple Watch, share cards, and more.</p>
       <div style="display:flex;gap:12px;align-items:center;margin-top:18px;flex-wrap:wrap;">
         <a class="card-link" href="training-stack/" style="margin-top:0;">
